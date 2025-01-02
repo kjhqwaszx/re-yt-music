@@ -1,9 +1,8 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
 import "./globals.css";
 import {ThemeProvider} from 'next-themes';
+import Sidebar from '@/components/Sidebar';
 
-const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "Clone YT Music",
@@ -24,7 +23,9 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
+          <Sidebar>
             {children}
+          </Sidebar>
         </ThemeProvider>
       </body>
     </html>
