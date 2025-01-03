@@ -1,8 +1,12 @@
+import {ReactNode} from 'react';
+import Header from '@/components/Header';
 
-export default function layout({children}: {children: JSX.Element}) {
+export default function layout({children}: {children: ReactNode}) {
   return (
-    <div>
-      {children}
+    <div className='w-full h-full'>
+      <Header>
+        {children}
+      </Header>
     </div>
   );
 }
