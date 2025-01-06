@@ -11,7 +11,8 @@ import {
 } from '@/components/ui/drawer';
 import Logo from '@/components/elements/Logo';
 import Navigator from '@/components/elements/Navigator';
-import {useState} from 'react';
+import {useEffect, useRef, useState} from 'react';
+import {cn} from '@/lib/utils';
 
 const HeaderDrawer = ({children}) =>{
   const [isOpen, setIsOpen] = useState(false);
@@ -31,9 +32,30 @@ const HeaderDrawer = ({children}) =>{
   )
 }
 export default function Header({children}) {
+  const [isScroll, setIsScroll] = useState(false);
+  const headRef = useRef(null);
+
+  const handleScroll = () =>{
+    const scrollValue = headRef?.current?.scrollTop
+    setIsScroll(scrollValue !== 0)
+  }
+
+  useEffect(() => {
+
+      headRef?.current?.addEventListener('scroll', handleScroll)
+
+      return () =>{
+        headRef?.current?.removeEventListener('scroll', handleScroll)
+      }
+
+  }, []);
+
+  useEffect(() => {
+    console.log('isScroll', isScroll);
+  }, [isScroll]);
 
   return (
-    <header className='relative overflow-y-auto w-full h-full'>
+    <header ref={headRef} className='relative overflow-y-auto w-full h-full'>
 
       {/* bg section*/}
       <section className='absolute top-0 w-full'>
@@ -47,10 +69,10 @@ export default function Header({children}) {
       </section>
 
       {/* Search Section*/}
-      <section className='sticky'>
+      <section className={cn('sticky top-0 left-0 z-10', isScroll && 'bg-black')}>
         <PagePadding>
           <div className='flex flex-row h-[64px] justify-between items-center'>
-            <article className='hidden lg:flex flex-row items-center h-[42px] min-w-[480px] bg-[rgba(0,0,0,0.14)] rounded-2xl px-[16px] gap-[16px]'>
+            <article className='hidden lg:flex flex-row items-center h-[42px] min-w-[480px] bg-[rgba(0,0,0,0.14)] rounded-2xl px-[16px] gap-[16px] border border-neutral-500'>
               <div>
                 <FiSearch size={24}/>
               </div>
