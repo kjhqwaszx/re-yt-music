@@ -13,6 +13,7 @@ import Logo from '@/components/elements/Logo';
 import Navigator from '@/components/elements/Navigator';
 import {useEffect, useRef, useState} from 'react';
 import {cn} from '@/lib/utils';
+import useUIState from "@/hooks/useUIState";
 
 const HeaderDrawer = ({children}) =>{
   const [isOpen, setIsOpen] = useState(false);
@@ -34,6 +35,7 @@ const HeaderDrawer = ({children}) =>{
 export default function Header({children}) {
   const [isScroll, setIsScroll] = useState(false);
   const headRef = useRef(null);
+  const {headerImageSrc} = useUIState()
 
   const handleScroll = () =>{
     const scrollValue = headRef?.current?.scrollTop
@@ -61,7 +63,7 @@ export default function Header({children}) {
       <section className='absolute top-0 w-full'>
         <div className='relative h-[400px] w-full'>
           <Image fill className='object-cover'
-                 src='https://images.unsplash.com/photo-1720884413532-59289875c3e1?q=80&w=1335&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'
+                 src={ headerImageSrc || 'https://images.unsplash.com/photo-1720884413532-59289875c3e1?q=80&w=1335&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'}
                  alt='Header Img'/>
         </div>
         <div className='absolute top-0 bg-black opacity-40 w-full h-[400px]'></div>
